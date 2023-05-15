@@ -1,22 +1,22 @@
 import { useState } from "react";
 import styles from "./login.module.css";
+import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
-  const [values, setValues] = useState({
+  const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
 
+  const { login, isPending, error } = useLogin();
+
   const handleChange = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setValues(() => ({
-      email: "",
-      password: "",
-    }));
+    login(formValues.email, formValues.password);
   };
 
   return (
@@ -28,7 +28,7 @@ const Login = () => {
           type="text"
           name="email"
           onChange={handleChange}
-          value={values.email}
+          value={formValues.email}
         />
       </label>
       <label>
@@ -37,12 +37,19 @@ const Login = () => {
           type="password"
           name="password"
           onChange={handleChange}
-          value={values.password}
+          value={formValues.password}
         />
       </label>
-      <button className="btn" onClick={handleSubmit}>
-        Login
-      </button>
+      {isPending ? (
+        <button className="btn" disabled>
+          Loading...
+        </button>
+      ) : (
+        <button className="btn" onClick={handleSubmit}>
+          Login
+        </button>
+      )}
+      {error && <p>{error}</p>}
     </form>
   );
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./signup.module.css";
+import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
   const [formValues, setFormValues] = useState({
@@ -9,28 +10,25 @@ const Signup = () => {
     confirmPassword: "",
   });
 
+  const { signup, isPending, error } = useSignup();
+
   const handleChange = (e) => {
     setFormValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormValues(() => ({
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    }));
+    signup(formValues.email, formValues.password, formValues.username);
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles["signup-form"]}>
-      <h2>Login</h2>
+      <h2>Signup</h2>
       <label>
         <span>username:</span>
         <input
           type="text"
-          name="email"
+          name="username"
           onChange={handleChange}
           value={formValues.username}
         />
@@ -57,14 +55,21 @@ const Signup = () => {
         <span>confirm password:</span>
         <input
           type="password"
-          name="password"
+          name="confirmPassword"
           onChange={handleChange}
           value={formValues.confirmPassword}
         />
       </label>
-      <button className="btn" onClick={handleSubmit}>
-        Login
-      </button>
+      {isPending ? (
+        <button className="btn" disabled>
+          Loading...
+        </button>
+      ) : (
+        <button className="btn" onClick={handleSubmit}>
+          Signup
+        </button>
+      )}
+      {error && <p>{error}</p>}
     </form>
   );
 };
