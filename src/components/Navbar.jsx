@@ -6,16 +6,19 @@ import { useAuthContext } from "../contexts/authContext";
 
 const Navbar = () => {
   const { logout } = useLogout();
-  const { ...state } = useAuthContext();
+  const { user } = useAuthContext();
 
   return (
     <nav className={styles.navbar}>
       <ul>
-        <li className={styles.title}>Tracka</li>
-        {state?.user ? (
-          <button className="btn" onClick={logout}>
-            Logout
-          </button>
+        <li className={styles.title}>Fin9nce Traka</li>
+        {user ? (
+          <>
+            <li>Hello {user.displayName}</li>
+            <button className="btn" onClick={logout}>
+              Logout
+            </button>
+          </>
         ) : (
           <li>
             <NavLink to="/login">Login</NavLink>

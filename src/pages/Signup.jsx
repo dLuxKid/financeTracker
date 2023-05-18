@@ -60,11 +60,13 @@ const Signup = () => {
           value={formValues.confirmPassword}
         />
       </label>
-      {isPending ? (
+      {isPending && (
         <button className="btn" disabled>
           Loading...
         </button>
-      ) : (
+      )}
+
+      {!isPending && (
         <button className="btn" onClick={handleSubmit}>
           Signup
         </button>

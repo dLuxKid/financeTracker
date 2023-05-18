@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { auth } from "../firebase/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useAuthContext } from "../contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
   const [isCancelled, setIsCancelled] = useState(false);
+  const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();
 
@@ -17,6 +19,7 @@ export const useSignup = () => {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+
       if (!res) {
         throw new Error("Could not complete signup");
       }
@@ -24,6 +27,8 @@ export const useSignup = () => {
       await updateProfile(res.user, { displayName });
       // dispatch event
       dispatch({ type: "LOGIN", payload: res.user });
+
+      navigate("/");
 
       if (!isCancelled) {
         setIsPending(false);
@@ -40,7 +45,6 @@ export const useSignup = () => {
   useEffect(() => {
     return () => {
       setIsCancelled(true);
-      console.log(isCancelled);
     };
   }, []);
 
