@@ -1,4 +1,5 @@
 import React, { useState, useReducer } from "react";
+import useFirestore from "../hooks/useFirestore";
 
 const initialState = {
   name: "",
@@ -12,6 +13,8 @@ const reducer = (state, action) => {
 const TransactionForm = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const { addData, document } = useFirestore();
+
   const handleChange = (e) => {
     const action = {
       name: e.target.name,
@@ -22,7 +25,8 @@ const TransactionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    addData(state.name, state.amount);
+    console.log(document);
   };
 
   return (
