@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
-  const [isCancelled, setIsCancelled] = useState(false);
+  // const [isCancelled, setIsCancelled] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();
@@ -28,23 +28,13 @@ export const useLogin = () => {
 
       navigate("/");
 
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(null);
-      }
+      setIsPending(false);
+      setError(null);
     } catch (error) {
-      if (!isCancelled) {
-        setError(error.message);
-        setIsPending(false);
-      }
+      setError(error.message);
+      setIsPending(false);
     }
   };
-
-  useEffect(() => {
-    return () => {
-      setIsCancelled(true);
-    };
-  }, []);
 
   return { isPending, error, login };
 };

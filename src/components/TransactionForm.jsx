@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 import useFirestore from "../hooks/useFirestore";
 
 const initialState = {
@@ -7,13 +7,16 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
+  if (action.type == "success") {
+    return { name: "", amount: "" };
+  }
   return { ...state, [action.name]: action.value };
 };
 
-const TransactionForm = () => {
+const TransactionForm = ({ uid }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { addData, document } = useFirestore();
+  const { addData, response } = useFirestore();
 
   const handleChange = (e) => {
     const action = {
@@ -25,9 +28,16 @@ const TransactionForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addData(state.name, state.amount);
-    console.log(document);
+    if (state.name && state.amount) {
+      addData(uid, state.name, state.amount);
+    }
   };
+
+  useEffect(() => {
+    if (response.success) {
+      dispatch({ type: "success", payload: { name: "", amount: "" } });
+    }
+  }, [response.success]);
 
   return (
     <>
@@ -53,9 +63,16 @@ const TransactionForm = () => {
             value={state.amount}
           />
         </label>
-        <button type="submit" onClick={handleSubmit}>
-          Add Transaction
-        </button>
+        {!response.isPending && (
+          <button type="submit" onClick={handleSubmit}>
+            Add Transaction
+          </button>
+        )}
+        {response.isPending && (
+          <button type="submit" disabled>
+            Adding...
+          </button>
+        )}
       </form>
     </>
   );

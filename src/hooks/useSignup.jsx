@@ -8,7 +8,7 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
-  const [isCancelled, setIsCancelled] = useState(false);
+  // const [isCancelled, setIsCancelled] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();
@@ -30,23 +30,13 @@ export const useSignup = () => {
 
       navigate("/");
 
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(null);
-      }
+      setIsPending(false);
+      setError(null);
     } catch (err) {
-      if (!isCancelled) {
-        setError(error.message);
-        setIsPending(false);
-      }
+      setError(error.message);
+      setIsPending(false);
     }
   };
-
-  useEffect(() => {
-    return () => {
-      setIsCancelled(true);
-    };
-  }, []);
 
   return { error, isPending, signup };
 };
