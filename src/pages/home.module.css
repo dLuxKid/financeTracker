@@ -61,3 +61,42 @@
 .sidebar aside li {
   margin: 0.75rem;
 }
+
+.transactions li {
+  margin: 1.875rem auto;
+  border: 1px solid #f2f2f2;
+  box-shadow: 3px 3px 5px rgba(50, 50, 50, 0.1);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-left: 4px solid #1f9751;
+}
+
+.transactions .name {
+  color: #777;
+  font-size: 1.5rem;
+}
+
+.transactions .amount {
+  margin-left: auto;
+  margin-right: 2.5rem;
+  color: #777;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+
+.transactions button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ddd;
+  color: #777;
+  border: 0;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  line-height: 0;
+  font-size: 0.875rem;
+  cursor: pointer;
+}

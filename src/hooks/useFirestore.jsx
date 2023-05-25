@@ -5,9 +5,8 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer } from "react";
 import { db } from "../firebase/firebase";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
   document: null,
@@ -46,7 +45,6 @@ const fireStoreReducer = (response, action) => {
 
 const useFirestore = () => {
   const [response, dispatch] = useReducer(fireStoreReducer, initialState);
-  // const [isCancelled, setIsCancelled] = useState(false);
 
   const addData = async (uid, name, amount) => {
     // dispatch pending state
@@ -61,8 +59,6 @@ const useFirestore = () => {
       });
       // dispatch docRef to state
       dispatch({ type: "SUCCESS", payload: docRef });
-
-      console.log(docRef);
     } catch (error) {
       // if error dispatch error to state
       dispatch({ type: "ERROR", payload: error.message });
