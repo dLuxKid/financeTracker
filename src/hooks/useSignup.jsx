@@ -8,7 +8,6 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
 
-  // const [isCancelled, setIsCancelled] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();

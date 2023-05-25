@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
-  // const [isCancelled, setIsCancelled] = useState(false);
   const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();

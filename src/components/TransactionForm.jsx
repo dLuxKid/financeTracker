@@ -35,7 +35,7 @@ const TransactionForm = ({ uid }) => {
 
   useEffect(() => {
     if (response.success) {
-      dispatch({ type: "success", payload: { name: "", amount: "" } });
+      dispatch({ type: "success" });
     }
   }, [response.success]);
 
