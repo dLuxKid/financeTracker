@@ -1,14 +1,16 @@
+// REACT
+import { useEffect, useState } from "react";
+// FIREBASE
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+// HOOK
 import { useAuthContext } from "../contexts/authContext";
-import { useEffect, useState } from "react";
 
+// log out function
 export const useLogout = () => {
   // Error and pending state
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  //  cancelled state
-  const [isCancelled, setIsCancelled] = useState(false);
 
   const { dispatch } = useAuthContext();
 
@@ -22,24 +24,15 @@ export const useLogout = () => {
         dispatch({ type: "LOGOUT" });
 
         // update state
-        if (!isCancelled) {
-          setIsPending(false);
-          setError(null);
-        }
+
+        setIsPending(false);
+        setError(null);
       })
       .catch((error) => {
-        if (!isCancelled) {
-          setError(error.message);
-          setIsPending(false);
-        }
+        setError(error.message);
+        setIsPending(false);
       });
   };
-
-  useEffect(() => {
-    return () => {
-      setIsCancelled(true);
-    };
-  }, []);
 
   return { logout, error, isPending };
 };

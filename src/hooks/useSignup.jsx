@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+// REACT
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// FIREBASE
 import { auth } from "../firebase/firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+// CONTEXT HOOK
 import { useAuthContext } from "../contexts/authContext";
-import { useNavigate } from "react-router-dom";
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -12,6 +15,7 @@ export const useSignup = () => {
 
   const { dispatch } = useAuthContext();
 
+  // sign in function
   const signup = async (email, password, displayName) => {
     setError(null);
     setIsPending(true);

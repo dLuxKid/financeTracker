@@ -1,3 +1,6 @@
+// REACT
+import { useReducer } from "react";
+// FIREBASE
 import {
   Timestamp,
   addDoc,
@@ -5,9 +8,9 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { useReducer } from "react";
 import { db } from "../firebase/firebase";
 
+// state
 const initialState = {
   document: null,
   isPending: false,
@@ -15,6 +18,7 @@ const initialState = {
   success: null,
 };
 
+// reducer function
 const fireStoreReducer = (response, action) => {
   switch (action.type) {
     case "PENDING":
@@ -38,6 +42,13 @@ const fireStoreReducer = (response, action) => {
         document: null,
         isPending: false,
       };
+    case "DELETED":
+      return {
+        error: null,
+        success: true,
+        document: null,
+        isPending: false,
+      };
     default:
       return response;
   }
@@ -46,6 +57,7 @@ const fireStoreReducer = (response, action) => {
 const useFirestore = () => {
   const [response, dispatch] = useReducer(fireStoreReducer, initialState);
 
+  // add transaction to the database
   const addData = async (uid, name, amount) => {
     // dispatch pending state
     dispatch({ type: "PENDING" });
@@ -65,8 +77,15 @@ const useFirestore = () => {
     }
   };
 
-  const deleteData = async (name) => {
-    await deleteDoc(doc(db, "transactions", name));
+  // delete transaction from the database
+  const deleteData = async (id) => {
+    dispatch({ type: "PENDING" });
+    try {
+      await deleteDoc(doc(db, "transactions", id));
+      dispatch({ type: "DELETE" });
+    } catch (error) {
+      dispatch({ type: "ERROR", payload: "could not delete" });
+    }
   };
 
   return { addData, deleteData, response };

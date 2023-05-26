@@ -26,3 +26,46 @@
 .navbar a {
   color: #333;
 }
+
+.navIcon {
+  color: #1f9751;
+  font-size: 1.2rem;
+  transform: rotate(90deg);
+  display: none;
+}
+
+.navMenu {
+  display: block;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@media screen and (max-width: 660px) {
+  .navIcon {
+    display: block;
+  }
+
+  .navMenu {
+    position: absolute;
+    z-index: 100;
+    display: none;
+    width: 80%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    background: #effaf0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+}

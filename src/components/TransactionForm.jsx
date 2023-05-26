@@ -1,11 +1,15 @@
+// REACT
 import React, { useEffect, useReducer } from "react";
+// HOOK
 import useFirestore from "../hooks/useFirestore";
 
+// form state
 const initialState = {
   name: "",
   amount: "",
 };
 
+// form reducer function
 const reducer = (state, action) => {
   if (action.type == "success") {
     return { name: "", amount: "" };
@@ -33,6 +37,7 @@ const TransactionForm = ({ uid }) => {
     }
   };
 
+  // clear form state on submit
   useEffect(() => {
     if (response.success) {
       dispatch({ type: "success" });

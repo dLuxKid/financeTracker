@@ -1,11 +1,10 @@
+// STYLES
 import "./App.css";
-// PAGES
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 // COMPONENTS
 import Navbar from "./components/Navbar";
+// CONTEXT HOOK
 import { useAuthContext } from "./contexts/authContext";
+// ROUTES
 import Routers from "./Routers/Routers";
 
 function App() {

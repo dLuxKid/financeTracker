@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+// REACT
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+// FIREBASE
 import { auth } from "../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+// CONTEXT HOOK
 import { useAuthContext } from "../contexts/authContext";
-import { useNavigate } from "react-router-dom";
 
 export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
+
   const navigate = useNavigate();
 
   const { dispatch } = useAuthContext();
 
+  // login function
   const login = async (email, password) => {
     setError(null);
     setIsPending(true);

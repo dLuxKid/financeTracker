@@ -1,5 +1,8 @@
+// REACT
 import { useState } from "react";
+// STYLES
 import styles from "./signup.module.css";
+// HOOKS
 import { useSignup } from "../hooks/useSignup";
 
 const Signup = () => {
@@ -18,7 +21,9 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signup(formValues.email, formValues.password, formValues.username);
+    if (formValues.email && formValues.password && formValues.username) {
+      signup(formValues.email, formValues.password, formValues.username);
+    }
   };
 
   return (
@@ -65,7 +70,6 @@ const Signup = () => {
           Loading...
         </button>
       )}
-
       {!isPending && (
         <button className="btn" onClick={handleSubmit}>
           Signup

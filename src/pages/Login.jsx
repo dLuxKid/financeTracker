@@ -1,5 +1,8 @@
+// REACT
 import { useState } from "react";
+// STYLES
 import styles from "./login.module.css";
+// HOOKS
 import { useLogin } from "../hooks/useLogin";
 
 const Login = () => {
@@ -16,7 +19,9 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(formValues.email, formValues.password);
+    if (formValues.email && formValues.password) {
+      login(formValues.email, formValues.password);
+    }
   };
 
   return (
